@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProspectAI — 讓 AI 幫你找全球買主，自動寄出千封客製化開發信</title>
+<title data-en="ProspectAI — Let AI Find Your Global Buyers and Send Thousands of Personalized Emails" data-zh="ProspectAI — 讓 AI 幫你找全球買主，自動寄出千封客製化開發信">ProspectAI — Let AI Find Your Global Buyers and Send Thousands of Personalized Emails</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -61,6 +61,12 @@
 
   .logo span { color: var(--accent); }
 
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
   nav ul {
     list-style: none;
     display: flex; gap: 2.5rem;
@@ -86,6 +92,42 @@
   }
 
   .nav-cta:hover { opacity: .88; }
+
+  /* ── LANGUAGE TOGGLE ── */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .lang-toggle button {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: .35rem .85rem;
+    cursor: pointer;
+    transition: all .25s ease;
+    white-space: nowrap;
+  }
+
+  .lang-toggle button.active {
+    background: var(--accent);
+    color: #0a0a0f;
+    border-radius: 100px;
+  }
+
+  .lang-toggle button:hover:not(.active) {
+    color: var(--text);
+  }
 
   /* ── HERO ── */
   .hero {
@@ -491,7 +533,7 @@
     position: relative;
   }
 
-  .email-mockup::after {
+  .email-mockup.personalized::after {
     content: 'PERSONALIZED';
     position: absolute; top: -10px; right: 12px;
     background: var(--accent);
@@ -560,7 +602,7 @@
   }
 
   .result-list li::before {
-    content: '→';
+    content: '\2192';
     color: var(--accent);
     font-weight: 700;
     flex-shrink: 0;
@@ -667,7 +709,7 @@
   }
 
   .plan-features li::before {
-    content: '✓';
+    content: '\2713';
     color: var(--accent2);
     font-weight: 700;
     flex-shrink: 0;
@@ -905,6 +947,7 @@
     nav ul { display: none; }
     .hero-stats { gap: 2rem; }
     .steps::before { display: none; }
+    .lang-toggle { margin-left: auto; }
   }
 
   @media (max-width: 600px) {
@@ -919,13 +962,19 @@
 <!-- NAV -->
 <nav>
   <div class="logo">Prospect<span>AI</span></div>
-  <ul>
-    <li><a href="#how">運作方式</a></li>
-    <li><a href="#features">功能特色</a></li>
-    <li><a href="#pricing">方案費用</a></li>
-    <li><a href="#faq">常見問答</a></li>
-    <li><a href="#cta" class="nav-cta">免費試用 14 天</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul>
+      <li><a href="#how" data-en="How It Works" data-zh="運作方式">How It Works</a></li>
+      <li><a href="#features" data-en="Features" data-zh="功能特色">Features</a></li>
+      <li><a href="#pricing" data-en="Pricing" data-zh="方案費用">Pricing</a></li>
+      <li><a href="#faq" data-en="FAQ" data-zh="常見問答">FAQ</a></li>
+      <li><a href="#cta" class="nav-cta" data-en="Start Free Trial" data-zh="免費試用 14 天">Start Free Trial</a></li>
+    </ul>
+    <div class="lang-toggle" id="langToggle">
+      <button id="btnEN" class="active">EN</button>
+      <button id="btnZH">中文</button>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -933,36 +982,33 @@
   <div class="hero-glow"></div>
   <div class="hero-grid"></div>
 
-  <div class="badge">全球市場開拓自動化系統</div>
+  <div class="badge" data-en="Global Sales Automation System" data-zh="全球市場開拓自動化系統">Global Sales Automation System</div>
 
-  <h1>讓 AI 幫你找到<br><em>全世界的買主</em><br>並自動寄信成交</h1>
+  <h1 data-en-html="Let AI Find Your<br><em>Global Buyers</em><br>and Close Deals Automatically" data-zh-html="讓 AI 幫你找到<br><em>全世界的買主</em><br>並自動寄信成交">Let AI Find Your<br><em>Global Buyers</em><br>and Close Deals Automatically</h1>
 
-  <p class="hero-sub">
-    系統每天自動蒐集精準名單、驗證有效信箱、針對每家客戶客製化寫信、並自動送出。
-    您的業務只需要早上打開信箱，回覆那些「已經有興趣」的客戶。
-  </p>
+  <p class="hero-sub" data-en="The system automatically collects qualified leads daily, verifies emails, writes personalized outreach per prospect, and sends on autopilot. Your sales team just opens their inbox and replies to interested buyers." data-zh="系統每天自動蒐集精準名單、驗證有效信箱、針對每家客戶客製化寫信、並自動送出。您的業務只需要早上打開信箱，回覆那些「已經有興趣」的客戶。">The system automatically collects qualified leads daily, verifies emails, writes personalized outreach per prospect, and sends on autopilot. Your sales team just opens their inbox and replies to interested buyers.</p>
 
   <div class="hero-actions">
-    <a href="#cta" class="btn-primary">免費試用 14 天 →</a>
-    <a href="#how" class="btn-secondary">看看怎麼運作的</a>
+    <a href="#cta" class="btn-primary" data-en="Start Free Trial for 14 Days →" data-zh="免費試用 14 天 →">Start Free Trial for 14 Days →</a>
+    <a href="#how" class="btn-secondary" data-en="See How It Works" data-zh="看看怎麼運作的">See How It Works</a>
   </div>
 
   <div class="hero-stats">
     <div class="stat-item">
       <span class="stat-num">18×</span>
-      <span class="stat-label">平均回覆率提升</span>
+      <span class="stat-label" data-en="Avg Reply Rate Boost" data-zh="平均回覆率提升">Avg Reply Rate Boost</span>
     </div>
     <div class="stat-item">
       <span class="stat-num">95%</span>
-      <span class="stat-label">信箱有效率</span>
+      <span class="stat-label" data-en="Email Accuracy" data-zh="信箱有效率">Email Accuracy</span>
     </div>
     <div class="stat-item">
       <span class="stat-num">3 hrs</span>
-      <span class="stat-label">每週節省業務工時</span>
+      <span class="stat-label" data-en="Weekly Hours Saved" data-zh="每週節省業務工時">Weekly Hours Saved</span>
     </div>
     <div class="stat-item">
       <span class="stat-num">40+</span>
-      <span class="stat-label">支援目標國家</span>
+      <span class="stat-label" data-en="Target Countries" data-zh="支援目標國家">Target Countries</span>
     </div>
   </div>
 </section>
@@ -970,30 +1016,30 @@
 <!-- PAIN -->
 <section class="pain">
   <div class="container">
-    <div class="section-label">為什麼傳統方式已失效</div>
-    <h2 class="section-title">每個外銷業務都在重複同一個惡性循環</h2>
-    <p class="section-sub">這不是業務的問題，是方法過時了。舊的流程讓你的團隊浪費 80% 的時間在沒有意義的事上。</p>
+    <div class="section-label" data-en="Why Traditional Methods Fail" data-zh="為什麼傳統方式已失效">Why Traditional Methods Fail</div>
+    <h2 class="section-title" data-en="Every Sales Team Is Stuck in the Same Broken Cycle" data-zh="每個外銷業務都在重複同一個惡性循環">Every Sales Team Is Stuck in the Same Broken Cycle</h2>
+    <p class="section-sub" data-en="It's not the sales team's fault — the methods are outdated. Legacy workflows waste 80% of your team's time on low-value tasks." data-zh="這不是業務的問題，是方法過時了。舊的流程讓你的團隊浪費 80% 的時間在沒有意義的事上。">It's not the sales team's fault — the methods are outdated. Legacy workflows waste 80% of your team's time on low-value tasks.</p>
 
     <div class="pain-grid">
       <div class="pain-card">
         <span class="pain-icon">🗑️</span>
-        <h3>買來的名單，一半是廢的</h3>
-        <p>花了幾萬塊買商業資料庫，結果一半的信箱已失效，退信率超高，公司信箱還差點被列入黑名單。</p>
+        <h3 data-en="Half Your Purchased Lists Are Dead" data-zh="買來的名單，一半是廢的">Half Your Purchased Lists Are Dead</h3>
+        <p data-en="Spent thousands on commercial databases, only to find half the emails bounced. Your domain nearly got blacklisted." data-zh="花了幾萬塊買商業資料庫，結果一半的信箱已失效，退信率超高，公司信箱還差點被列入黑名單。">Spent thousands on commercial databases, only to find half the emails bounced. Your domain nearly got blacklisted.</p>
       </div>
       <div class="pain-card">
         <span class="pain-icon">📄</span>
-        <h3>群發罐頭信，沒人理你</h3>
-        <p>為了省時間把同一封公司簡介複製貼上給兩百家公司，對方一眼看出是群發，直接丟垃圾桶。</p>
+        <h3 data-en="Generic Mass Emails Get Ignored" data-zh="群發罐頭信，沒人理你">Generic Mass Emails Get Ignored</h3>
+        <p data-en="Copy-pasting the same company intro to 200 prospects — they spot it instantly and trash it." data-zh="為了省時間把同一封公司簡介複製貼上給兩百家公司，對方一眼看出是群發，直接丟垃圾桶。">Copy-pasting the same company intro to 200 prospects — they spot it instantly and trash it.</p>
       </div>
       <div class="pain-card">
         <span class="pain-icon">⏳</span>
-        <h3>業務人員在「找名單」不是在「談客戶」</h3>
-        <p>優秀的業務花了 60% 的時間在 Google 搜尋、手動整理 Excel，剩下才能真正跟客戶說話。</p>
+        <h3 data-en="Reps Are Researching, Not Selling" data-zh="業務人員在「找名單」不是在「談客戶」">Reps Are Researching, Not Selling</h3>
+        <p data-en="Top salespeople spend 60% of their time Googling and organizing spreadsheets instead of talking to clients." data-zh="優秀的業務花了 60% 的時間在 Google 搜尋、手動整理 Excel，剩下才能真正跟客戶說話。">Top salespeople spend 60% of their time Googling and organizing spreadsheets instead of talking to clients.</p>
       </div>
       <div class="pain-card">
         <span class="pain-icon">💸</span>
-        <h3>業務離職，客戶名單跟著走</h3>
-        <p>所有的開發記錄都在業務自己的信箱和腦子裡。一旦人走，公司就得從零開始，成本再翻一遍。</p>
+        <h3 data-en="When Reps Leave, Your Pipeline Leaves Too" data-zh="業務離職，客戶名單跟著走">When Reps Leave, Your Pipeline Leaves Too</h3>
+        <p data-en="All prospecting records live in reps' inboxes and heads. When they leave, you start from zero." data-zh="所有的開發記錄都在業務自己的信箱和腦子裡。一旦人走，公司就得從零開始，成本再翻一遍。">All prospecting records live in reps' inboxes and heads. When they leave, you start from zero.</p>
       </div>
     </div>
   </div>
@@ -1002,30 +1048,30 @@
 <!-- HOW IT WORKS -->
 <section class="how" id="how">
   <div class="container">
-    <div class="section-label">四個自動化步驟</div>
-    <h2 class="section-title">從目標設定到客戶回覆<br>全自動、零人力介入</h2>
-    <p class="section-sub">您只需要告訴系統「我要賣什麼」和「我要找誰」，剩下的全部交給 AI。</p>
+    <div class="section-label" data-en="Four Automated Steps" data-zh="四個自動化步驟">Four Automated Steps</div>
+    <h2 class="section-title" data-en-html="From Setup to Reply —<br>Fully Automated, Zero Manual Work" data-zh-html="從目標設定到客戶回覆<br>全自動、零人力介入">From Setup to Reply —<br>Fully Automated, Zero Manual Work</h2>
+    <p class="section-sub" data-en="Just tell the system what you sell and who you're targeting. AI handles the rest." data-zh="您只需要告訴系統「我要賣什麼」和「我要找誰」，剩下的全部交給 AI。">Just tell the system what you sell and who you're targeting. AI handles the rest.</p>
 
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
-        <h3>策略設定</h3>
-        <p>輸入產品賣點（認證、專利、樣品）和目標市場（國家 + 產業），五分鐘完成設定。</p>
+        <h3 data-en="Strategy Setup" data-zh="策略設定">Strategy Setup</h3>
+        <p data-en="Enter your product USPs (certifications, patents, samples) and target market (country + industry). Done in 5 minutes." data-zh="輸入產品賣點（認證、專利、樣品）和目標市場（國家 + 產業），五分鐘完成設定。">Enter your product USPs (certifications, patents, samples) and target market (country + industry). Done in 5 minutes.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>全網精準蒐集</h3>
-        <p>AI 自動在全球網路搜尋最新、最活躍的潛在買主，並自動排除無效和重複的聯絡人。</p>
+        <h3 data-en="Smart Lead Discovery" data-zh="全網精準蒐集">Smart Lead Discovery</h3>
+        <p data-en="AI scans the global web for the most active, relevant prospects and automatically filters out invalid and duplicate contacts." data-zh="AI 自動在全球網路搜尋最新、最活躍的潛在買主，並自動排除無效和重複的聯絡人。">AI scans the global web for the most active, relevant prospects and automatically filters out invalid and duplicate contacts.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>千人千面客製文案</h3>
-        <p>每一封信都根據對方公司的業務模式重新撰寫，讓客戶覺得「你是專程來找我的」。</p>
+        <h3 data-en="Hyper-Personalized Copy" data-zh="千人千面客製文案">Hyper-Personalized Copy</h3>
+        <p data-en="Every email is custom-written based on the prospect's business model, making them feel like you reached out specifically to them." data-zh="每一封信都根據對方公司的業務模式重新撰寫，讓客戶覺得「你是專程來找我的」。">Every email is custom-written based on the prospect's business model, making them feel like you reached out specifically to them.</p>
       </div>
       <div class="step">
         <div class="step-num">04</div>
-        <h3>智慧排程自動發送</h3>
-        <p>模仿人類真實發信頻率，保護您的域名信譽。您可選全自動或審核後發送。</p>
+        <h3 data-en="Smart Scheduling & Delivery" data-zh="智慧排程自動發送">Smart Scheduling & Delivery</h3>
+        <p data-en="Mimics human sending patterns to protect your domain reputation. Choose fully automatic or review-before-send." data-zh="模仿人類真實發信頻率，保護您的域名信譽。您可選全自動或審核後發送。">Mimics human sending patterns to protect your domain reputation. Choose fully automatic or review-before-send.</p>
       </div>
     </div>
   </div>
@@ -1034,40 +1080,40 @@
 <!-- FEATURES -->
 <section class="features" id="features">
   <div class="container">
-    <div class="section-label">核心功能</div>
-    <h2 class="section-title">每個細節都在保護<br>您的開發勝率</h2>
-    <p class="section-sub">從名單品質到信件投遞率，ProspectAI 在每個環節都設有防護機制。</p>
+    <div class="section-label" data-en="Core Features" data-zh="核心功能">Core Features</div>
+    <h2 class="section-title" data-en-html="Every Detail Is Designed to<br>Maximize Your Win Rate" data-zh-html="每個細節都在保護<br>您的開發勝率">Every Detail Is Designed to<br>Maximize Your Win Rate</h2>
+    <p class="section-sub" data-en="From lead quality to email deliverability, ProspectAI has safeguards at every step." data-zh="從名單品質到信件投遞率，ProspectAI 在每個環節都設有防護機制。">From lead quality to email deliverability, ProspectAI has safeguards at every step.</p>
 
     <div class="features-grid">
       <div class="feature-card">
-        <span class="feature-tag">名單品質</span>
-        <h3>即時信箱驗證引擎</h3>
-        <p>發信前自動驗證每一個信箱是否有效，退信率控制在 2% 以下，讓您的域名永遠保持健康。</p>
+        <span class="feature-tag" data-en="LEAD QUALITY" data-zh="名單品質">LEAD QUALITY</span>
+        <h3 data-en="Real-Time Email Verification" data-zh="即時信箱驗證引擎">Real-Time Email Verification</h3>
+        <p data-en="Auto-verifies every email before sending. Keeps bounce rate under 2% and protects your domain health." data-zh="發信前自動驗證每一個信箱是否有效，退信率控制在 2% 以下，讓您的域名永遠保持健康。">Auto-verifies every email before sending. Keeps bounce rate under 2% and protects your domain health.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-tag">AI 文案</span>
-        <h3>多維度客製化引擎</h3>
-        <p>讀取對方網站、產品介紹、社群資訊，針對「鷹架公司」強調成本，針對「代理商」強調認證與利潤空間。</p>
+        <span class="feature-tag" data-en="AI COPY" data-zh="AI 文案">AI COPY</span>
+        <h3 data-en="Multi-Dimensional Personalization" data-zh="多維度客製化引擎">Multi-Dimensional Personalization</h3>
+        <p data-en="Reads prospect websites, products, and social profiles. Tailors messaging per industry context — scaffolding companies get cost savings, distributors get margin potential." data-zh="讀取對方網站、產品介紹、社群資訊，針對「鷹架公司」強調成本，針對「代理商」強調認證與利潤空間。">Reads prospect websites, products, and social profiles. Tailors messaging per industry context — scaffolding companies get cost savings, distributors get margin potential.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-tag">送達率</span>
-        <h3>主旨與句型隨機變化</h3>
-        <p>每封信件主旨和開場白都不同，完美規避垃圾郵件過濾器，確保信件落在主收件匣。</p>
+        <span class="feature-tag" data-en="DELIVERABILITY" data-zh="送達率">DELIVERABILITY</span>
+        <h3 data-en="Dynamic Subject Lines & Openers" data-zh="主旨與句型隨機變化">Dynamic Subject Lines & Openers</h3>
+        <p data-en="Every email has unique subject lines and opening lines, bypassing spam filters to land in the primary inbox." data-zh="每封信件主旨和開場白都不同，完美規避垃圾郵件過濾器，確保信件落在主收件匣。">Every email has unique subject lines and opening lines, bypassing spam filters to land in the primary inbox.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-tag">域名保護</span>
-        <h3>人性化發送節奏</h3>
-        <p>系統自動模擬真人發信頻率，分散在多個時段送出，每日上限智慧控管，確保帳號安全。</p>
+        <span class="feature-tag" data-en="DOMAIN SAFETY" data-zh="域名保護">DOMAIN SAFETY</span>
+        <h3 data-en="Human-Like Sending Rhythm" data-zh="人性化發送節奏">Human-Like Sending Rhythm</h3>
+        <p data-en="Simulates real human sending frequency across multiple time slots with smart daily caps to keep your account safe." data-zh="系統自動模擬真人發信頻率，分散在多個時段送出，每日上限智慧控管，確保帳號安全。">Simulates real human sending frequency across multiple time slots with smart daily caps to keep your account safe.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-tag">後續跟進</span>
-        <h3>自動 Follow-up 序列</h3>
-        <p>對於未回覆的潛在客戶，系統可自動在 3 天、7 天後發送友善提醒，轉化率再提升 40%。</p>
+        <span class="feature-tag" data-en="FOLLOW-UP" data-zh="後續跟進">FOLLOW-UP</span>
+        <h3 data-en="Automated Follow-Up Sequences" data-zh="自動 Follow-up 序列">Automated Follow-Up Sequences</h3>
+        <p data-en="For non-responders, the system sends friendly reminders at day 3 and day 7, boosting conversion by another 40%." data-zh="對於未回覆的潛在客戶，系統可自動在 3 天、7 天後發送友善提醒，轉化率再提升 40%。">For non-responders, the system sends friendly reminders at day 3 and day 7, boosting conversion by another 40%.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-tag">數據分析</span>
-        <h3>全流程雲端報表</h3>
-        <p>開信率、點擊率、回覆率一目了然。所有開發記錄永久保存於公司帳戶，業務異動不影響業績。</p>
+        <span class="feature-tag" data-en="ANALYTICS" data-zh="數據分析">ANALYTICS</span>
+        <h3 data-en="Full-Funnel Cloud Dashboard" data-zh="全流程雲端報表">Full-Funnel Cloud Dashboard</h3>
+        <p data-en="Open rate, click rate, reply rate at a glance. All records are permanently stored in your company account — never lost to staff turnover." data-zh="開信率、點擊率、回覆率一目了然。所有開發記錄永久保存於公司帳戶，業務異動不影響業績。">Open rate, click rate, reply rate at a glance. All records are permanently stored in your company account — never lost to staff turnover.</p>
       </div>
     </div>
   </div>
@@ -1078,8 +1124,8 @@
   <div class="container">
     <div class="case-inner">
       <div class="case-visual">
-        <div class="email-mockup">
-          <div class="email-from">To: info@scaffoldcanada.ca · 鷹架租賃公司</div>
+        <div class="email-mockup personalized">
+          <div class="email-from">To: info@scaffoldcanada.ca</div>
           <div class="email-subject">Re: Cost reduction for your scaffolding fleet</div>
           <div class="email-body">
             Hi Mark,<br><br>
@@ -1088,10 +1134,10 @@
           </div>
         </div>
 
-        <div class="vs-divider">VS. 傳統群發 ↓</div>
+        <div class="vs-divider" data-en="VS. Traditional Mass Email ↓" data-zh="VS. 傳統群發 ↓">VS. Traditional Mass Email ↓</div>
 
         <div class="email-mockup" style="opacity:.45; pointer-events:none;">
-          <div class="email-from">To: 200 recipients · 全部一樣</div>
+          <div class="email-from" data-en="To: 200 recipients · All identical" data-zh="To: 200 recipients · 全部一樣">To: 200 recipients · All identical</div>
           <div class="email-subject">Company Introduction – Taiwan Manufacturer</div>
           <div class="email-body" style="text-decoration: line-through; opacity:.6;">
             Dear Sir/Madam,<br><br>
@@ -1101,16 +1147,16 @@
       </div>
 
       <div class="case-content">
-        <div class="section-label">實戰案例</div>
-        <h2>新型膨脹螺絲<br>打入加拿大市場</h2>
-        <p>一家台灣五金廠商，過去靠業務手動搜尋寄出 200 封群發信，收到 1 封回覆（「不需要」）。導入 ProspectAI 後，系統針對鷹架公司、建材代理商、建築包商分別撰寫客製化信件，同時提供免費樣品作為低門檻誘因。</p>
+        <div class="section-label" data-en="Case Study" data-zh="實戰案例">Case Study</div>
+        <h2 data-en-html="Expansion Bolts<br>Breaking Into the Canadian Market" data-zh-html="新型膨脹螺絲<br>打入加拿大市場">Expansion Bolts<br>Breaking Into the Canadian Market</h2>
+        <p data-en="A Taiwanese hardware manufacturer previously sent 200 generic emails manually and received 1 reply (&quot;not interested&quot;). After adopting ProspectAI, the system wrote tailored emails for scaffolding companies, building material distributors, and construction contractors, offering free samples as a low-barrier incentive." data-zh="一家台灣五金廠商，過去靠業務手動搜尋寄出 200 封群發信，收到 1 封回覆（「不需要」）。導入 ProspectAI 後，系統針對鷹架公司、建材代理商、建築包商分別撰寫客製化信件，同時提供免費樣品作為低門檻誘因。">A Taiwanese hardware manufacturer previously sent 200 generic emails manually and received 1 reply ("not interested"). After adopting ProspectAI, the system wrote tailored emails for scaffolding companies, building material distributors, and construction contractors, offering free samples as a low-barrier incentive.</p>
 
         <ul class="result-list">
-          <li>三週內精準蒐集加拿大相關業者 340 家</li>
-          <li>自動分三類撰寫不同賣點的客製化信件</li>
-          <li>發出 310 封有效信（30 封信箱無效已自動剔除）</li>
-          <li>收到 27 封回覆，索取樣品率 8.7%（業界平均 0.5%）</li>
-          <li>最終成功開發 4 家新代理商，三個月內首張訂單到位</li>
+          <li data-en="340 relevant Canadian companies identified in 3 weeks" data-zh="三週內精準蒐集加拿大相關業者 340 家">340 relevant Canadian companies identified in 3 weeks</li>
+          <li data-en="Auto-segmented into 3 categories with tailored messaging" data-zh="自動分三類撰寫不同賣點的客製化信件">Auto-segmented into 3 categories with tailored messaging</li>
+          <li data-en="310 valid emails sent (30 invalid auto-removed)" data-zh="發出 310 封有效信（30 封信箱無效已自動剔除）">310 valid emails sent (30 invalid auto-removed)</li>
+          <li data-en="27 replies received, 8.7% sample request rate (industry avg: 0.5%)" data-zh="收到 27 封回覆，索取樣品率 8.7%（業界平均 0.5%）">27 replies received, 8.7% sample request rate (industry avg: 0.5%)</li>
+          <li data-en="4 new distributors acquired, first order within 3 months" data-zh="最終成功開發 4 家新代理商，三個月內首張訂單到位">4 new distributors acquired, first order within 3 months</li>
         </ul>
       </div>
     </div>
@@ -1120,57 +1166,57 @@
 <!-- PRICING -->
 <section class="pricing" id="pricing">
   <div class="container">
-    <div class="section-label">簡單透明定價</div>
-    <h2 class="section-title">選擇適合您規模的方案</h2>
-    <p class="section-sub">所有方案皆包含免費客製化 Onboarding。無隱藏費用，隨時可升降方案。</p>
+    <div class="section-label" data-en="Simple, Transparent Pricing" data-zh="簡單透明定價">Simple, Transparent Pricing</div>
+    <h2 class="section-title" data-en="Choose the Right Plan for Your Scale" data-zh="選擇適合您規模的方案">Choose the Right Plan for Your Scale</h2>
+    <p class="section-sub" data-en="All plans include free onboarding. No hidden fees. Upgrade or downgrade anytime." data-zh="所有方案皆包含免費客製化 Onboarding。無隱藏費用，隨時可升降方案。">All plans include free onboarding. No hidden fees. Upgrade or downgrade anytime.</p>
 
     <div class="plans">
       <div class="plan">
-        <div class="plan-badge-top">最受歡迎</div>
+        <div class="plan-badge-top" data-en="MOST POPULAR" data-zh="最受歡迎">MOST POPULAR</div>
         <div class="plan-name">Starter</div>
-        <div class="plan-price">$99 <span>/ 月</span></div>
-        <div class="plan-desc">適合剛開始進行海外開拓的中小企業</div>
+        <div class="plan-price">$99 <span data-en="/ mo" data-zh="/ 月">/ mo</span></div>
+        <div class="plan-desc" data-en="For SMBs starting their international expansion" data-zh="適合剛開始進行海外開拓的中小企業">For SMBs starting their international expansion</div>
         <ul class="plan-features">
-          <li>每月 500 封有效信件</li>
-          <li>2 個開發專案</li>
-          <li>AI 客製化信件撰寫</li>
-          <li>信箱有效性驗證</li>
-          <li>基本雲端報表</li>
+          <li data-en="500 verified emails/month" data-zh="每月 500 封有效信件">500 verified emails/month</li>
+          <li data-en="2 prospecting campaigns" data-zh="2 個開發專案">2 prospecting campaigns</li>
+          <li data-en="AI-personalized email writing" data-zh="AI 客製化信件撰寫">AI-personalized email writing</li>
+          <li data-en="Email verification" data-zh="信箱有效性驗證">Email verification</li>
+          <li data-en="Basic cloud dashboard" data-zh="基本雲端報表">Basic cloud dashboard</li>
         </ul>
-        <a href="#cta" class="plan-btn outline">開始免費試用</a>
+        <a href="#cta" class="plan-btn outline" data-en="Start Free Trial" data-zh="開始免費試用">Start Free Trial</a>
       </div>
 
       <div class="plan featured">
-        <div class="plan-badge-top">最熱門</div>
+        <div class="plan-badge-top" data-en="MOST POPULAR" data-zh="最熱門">MOST POPULAR</div>
         <div class="plan-name">Growth</div>
-        <div class="plan-price">$249 <span>/ 月</span></div>
-        <div class="plan-desc">適合積極擴展多個海外市場的成長型企業</div>
+        <div class="plan-price">$249 <span data-en="/ mo" data-zh="/ 月">/ mo</span></div>
+        <div class="plan-desc" data-en="For growing companies expanding into multiple markets" data-zh="適合積極擴展多個海外市場的成長型企業">For growing companies expanding into multiple markets</div>
         <ul class="plan-features">
-          <li>每月 2,000 封有效信件</li>
-          <li>10 個開發專案</li>
-          <li>多維度 AI 客製化文案</li>
-          <li>自動 Follow-up 序列</li>
-          <li>域名信譽保護機制</li>
-          <li>完整數據分析報表</li>
-          <li>WhatsApp 整合跟進</li>
+          <li data-en="2,000 verified emails/month" data-zh="每月 2,000 封有效信件">2,000 verified emails/month</li>
+          <li data-en="10 prospecting campaigns" data-zh="10 個開發專案">10 prospecting campaigns</li>
+          <li data-en="Multi-dimensional AI copy" data-zh="多維度 AI 客製化文案">Multi-dimensional AI copy</li>
+          <li data-en="Automated follow-up sequences" data-zh="自動 Follow-up 序列">Automated follow-up sequences</li>
+          <li data-en="Domain reputation protection" data-zh="域名信譽保護機制">Domain reputation protection</li>
+          <li data-en="Full analytics dashboard" data-zh="完整數據分析報表">Full analytics dashboard</li>
+          <li data-en="WhatsApp integration" data-zh="WhatsApp 整合跟進">WhatsApp integration</li>
         </ul>
-        <a href="#cta" class="plan-btn primary">開始免費試用 →</a>
+        <a href="#cta" class="plan-btn primary" data-en="Start Free Trial →" data-zh="開始免費試用 →">Start Free Trial →</a>
       </div>
 
       <div class="plan">
-        <div class="plan-badge-top">最受歡迎</div>
+        <div class="plan-badge-top" data-en="MOST POPULAR" data-zh="最受歡迎">MOST POPULAR</div>
         <div class="plan-name">Enterprise</div>
-        <div class="plan-price">客製<span> 報價</span></div>
-        <div class="plan-desc">適合大型業務團隊或多品牌集團</div>
+        <div class="plan-price" data-en-html="Custom<span> Quote</span>" data-zh-html="客製<span> 報價</span>">Custom<span> Quote</span></div>
+        <div class="plan-desc" data-en="For large sales teams or multi-brand groups" data-zh="適合大型業務團隊或多品牌集團">For large sales teams or multi-brand groups</div>
         <ul class="plan-features">
-          <li>無限信件發送量</li>
-          <li>無限開發專案</li>
-          <li>專屬客戶成功經理</li>
-          <li>自訂 AI 文案風格與品牌聲音</li>
-          <li>CRM 系統整合（Salesforce / HubSpot）</li>
-          <li>SLA 服務等級保障</li>
+          <li data-en="Unlimited emails" data-zh="無限信件發送量">Unlimited emails</li>
+          <li data-en="Unlimited campaigns" data-zh="無限開發專案">Unlimited campaigns</li>
+          <li data-en="Dedicated Customer Success Manager" data-zh="專屬客戶成功經理">Dedicated Customer Success Manager</li>
+          <li data-en="Custom AI tone & brand voice" data-zh="自訂 AI 文案風格與品牌聲音">Custom AI tone & brand voice</li>
+          <li data-en="CRM integration (Salesforce / HubSpot)" data-zh="CRM 系統整合（Salesforce / HubSpot）">CRM integration (Salesforce / HubSpot)</li>
+          <li data-en="SLA guarantee" data-zh="SLA 服務等級保障">SLA guarantee</li>
         </ul>
-        <a href="#cta" class="plan-btn outline">聯繫業務洽談</a>
+        <a href="#cta" class="plan-btn outline" data-en="Contact Sales" data-zh="聯繫業務洽談">Contact Sales</a>
       </div>
     </div>
   </div>
@@ -1179,42 +1225,42 @@
 <!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="container">
-    <div class="section-label">客戶心聲</div>
-    <h2 class="section-title">他們的業務，<br>已經不一樣了</h2>
+    <div class="section-label" data-en="What Our Clients Say" data-zh="客戶心聲">What Our Clients Say</div>
+    <h2 class="section-title" data-en-html="Their Sales Pipeline<br>Has Transformed" data-zh-html="他們的業務，<br>已經不一樣了">Their Sales Pipeline<br>Has Transformed</h2>
 
     <div class="testi-grid">
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">「導入後的第一個月，我們就在澳洲市場找到了 3 家有意願的代理商。以前靠業務手動找，可能要花三個月還不一定有結果。」</p>
+        <p class="testi-text" data-en="&quot;Within the first month, we found 3 interested distributors in the Australian market. Previously, our reps would spend three months searching manually with no guaranteed results.&quot;" data-zh="「導入後的第一個月，我們就在澳洲市場找到了 3 家有意願的代理商。以前靠業務手動找，可能要花三個月還不一定有結果。」">"Within the first month, we found 3 interested distributors in the Australian market. Previously, our reps would spend three months searching manually with no guaranteed results."</p>
         <div class="testi-author">
-          <div class="testi-avatar">陳</div>
+          <div class="testi-avatar" data-en="JC" data-zh="陳">JC</div>
           <div>
-            <div class="testi-name">陳志豪</div>
-            <div class="testi-role">業務總監 · 台灣塑料製品出口商</div>
+            <div class="testi-name" data-en="James Chen" data-zh="陳志豪">James Chen</div>
+            <div class="testi-role" data-en="Sales Director · Taiwan Plastics Exporter" data-zh="業務總監 · 台灣塑料製品出口商">Sales Director · Taiwan Plastics Exporter</div>
           </div>
         </div>
       </div>
 
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">「最讓我驚訝的是客製化的程度。客戶以為是我們業務專程寫給他們的，完全不像群發信。回覆率從 0.3% 跳到快 6%。」</p>
+        <p class="testi-text" data-en="&quot;What surprised me most was the personalization. Clients thought our reps wrote to them individually — it didn't look like mass email at all. Reply rate jumped from 0.3% to nearly 6%.&quot;" data-zh="「最讓我驚訝的是客製化的程度。客戶以為是我們業務專程寫給他們的，完全不像群發信。回覆率從 0.3% 跳到快 6%。」">"What surprised me most was the personalization. Clients thought our reps wrote to them individually — it didn't look like mass email at all. Reply rate jumped from 0.3% to nearly 6%."</p>
         <div class="testi-author">
-          <div class="testi-avatar">林</div>
+          <div class="testi-avatar" data-en="ML" data-zh="林">ML</div>
           <div>
-            <div class="testi-name">林美玲</div>
-            <div class="testi-role">行銷經理 · 工業設備製造商</div>
+            <div class="testi-name" data-en="Mei-Ling Lin" data-zh="林美玲">Mei-Ling Lin</div>
+            <div class="testi-role" data-en="Marketing Manager · Industrial Equipment Manufacturer" data-zh="行銷經理 · 工業設備製造商">Marketing Manager · Industrial Equipment Manufacturer</div>
           </div>
         </div>
       </div>
 
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">「展覽前三週用 ProspectAI 邀約，到場的潛在客戶比去年多了一倍，而且都是我們真正想談的客群，不是來拿贈品的。」</p>
+        <p class="testi-text" data-en="&quot;We used ProspectAI to invite prospects 3 weeks before a trade show. Attendance from potential buyers doubled compared to last year, and they were all the right profiles — not just freebie collectors.&quot;" data-zh="「展覽前三週用 ProspectAI 邀約，到場的潛在客戶比去年多了一倍，而且都是我們真正想談的客群，不是來拿贈品的。」">"We used ProspectAI to invite prospects 3 weeks before a trade show. Attendance from potential buyers doubled compared to last year, and they were all the right profiles — not just freebie collectors."</p>
         <div class="testi-author">
-          <div class="testi-avatar">王</div>
+          <div class="testi-avatar" data-en="KW" data-zh="王">KW</div>
           <div>
-            <div class="testi-name">王建明</div>
-            <div class="testi-role">創辦人 · 醫療器材新創公司</div>
+            <div class="testi-name" data-en="Kevin Wang" data-zh="王建明">Kevin Wang</div>
+            <div class="testi-role" data-en="Founder · Medical Device Startup" data-zh="創辦人 · 醫療器材新創公司">Founder · Medical Device Startup</div>
           </div>
         </div>
       </div>
@@ -1225,34 +1271,34 @@
 <!-- FAQ -->
 <section class="faq" id="faq">
   <div class="container">
-    <div class="section-label" style="text-align:center">常見問答</div>
-    <h2 class="section-title" style="text-align:center; margin-bottom: .5rem">您可能想知道的事</h2>
+    <div class="section-label" style="text-align:center" data-en="FAQ" data-zh="常見問答">FAQ</div>
+    <h2 class="section-title" style="text-align:center; margin-bottom: .5rem" data-en="Questions You Might Have" data-zh="您可能想知道的事">Questions You Might Have</h2>
     <p class="section-sub" style="text-align:center; margin: 0 auto 0"></p>
 
     <div class="faq-grid">
       <div class="faq-item">
-        <div class="faq-q">系統找到的名單是合法的嗎？</div>
-        <div class="faq-a">是的。系統僅搜集公開於網路上的企業聯絡資訊（如官方網站、商業目錄、LinkedIn 公開頁面），完全符合 GDPR 與各國商業電子郵件法規的 B2B 通訊規範。</div>
+        <div class="faq-q" data-en="Is the data collection legal?" data-zh="系統找到的名單是合法的嗎？">Is the data collection legal?</div>
+        <div class="faq-a" data-en="Yes. The system only collects publicly available business contact information (company websites, business directories, public LinkedIn pages), fully compliant with GDPR and B2B commercial email regulations." data-zh="是的。系統僅搜集公開於網路上的企業聯絡資訊（如官方網站、商業目錄、LinkedIn 公開頁面），完全符合 GDPR 與各國商業電子郵件法規的 B2B 通訊規範。">Yes. The system only collects publicly available business contact information (company websites, business directories, public LinkedIn pages), fully compliant with GDPR and B2B commercial email regulations.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">會不會讓我的公司信箱被列入垃圾信？</div>
-        <div class="faq-a">不會。系統內建域名暖身（Email Warming）、發送頻率控管、信箱有效驗證三重保護，確保退信率低於 2%，主動維護您的域名信譽。</div>
+        <div class="faq-q" data-en="Will it get my company email blacklisted?" data-zh="會不會讓我的公司信箱被列入垃圾信？">Will it get my company email blacklisted?</div>
+        <div class="faq-a" data-en="No. The system includes email warming, sending frequency controls, and email verification — a triple-layer protection that keeps bounce rates under 2% and actively maintains your domain reputation." data-zh="不會。系統內建域名暖身（Email Warming）、發送頻率控管、信箱有效驗證三重保護，確保退信率低於 2%，主動維護您的域名信譽。">No. The system includes email warming, sending frequency controls, and email verification — a triple-layer protection that keeps bounce rates under 2% and actively maintains your domain reputation.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">我們的產業比較冷門，AI 也能客製化嗎？</div>
-        <div class="faq-a">可以。只要告訴系統您的產品特性和目標客群特徵，AI 就能學習行業術語和買家痛點，不管是工業零件、農業機械還是軟體服務都適用。</div>
+        <div class="faq-q" data-en="Can AI personalize for niche industries?" data-zh="我們的產業比較冷門，AI 也能客製化嗎？">Can AI personalize for niche industries?</div>
+        <div class="faq-a" data-en="Absolutely. Just describe your product characteristics and target audience. The AI learns industry terminology and buyer pain points — whether it's industrial parts, agricultural machinery, or software services." data-zh="可以。只要告訴系統您的產品特性和目標客群特徵，AI 就能學習行業術語和買家痛點，不管是工業零件、農業機械還是軟體服務都適用。">Absolutely. Just describe your product characteristics and target audience. The AI learns industry terminology and buyer pain points — whether it's industrial parts, agricultural machinery, or software services.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">需要懂技術或 AI 嗎？</div>
-        <div class="faq-a">完全不需要。介面設計以業務人員為核心，操作就像填表格一樣直覺。我們也提供免費的一對一 Onboarding 協助您在第一天就開始運作。</div>
+        <div class="faq-q" data-en="Do I need technical or AI knowledge?" data-zh="需要懂技術或 AI 嗎？">Do I need technical or AI knowledge?</div>
+        <div class="faq-a" data-en="Not at all. The interface is designed for sales professionals — it's as simple as filling out a form. We also provide free 1-on-1 onboarding to get you running on day one." data-zh="完全不需要。介面設計以業務人員為核心，操作就像填表格一樣直覺。我們也提供免費的一對一 Onboarding 協助您在第一天就開始運作。">Not at all. The interface is designed for sales professionals — it's as simple as filling out a form. We also provide free 1-on-1 onboarding to get you running on day one.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">信件內容我可以審核後才發出嗎？</div>
-        <div class="faq-a">可以。系統提供「全自動模式」和「人工審核模式」兩種選項，您可以設定讓系統先產生草稿，業務審核後再按發送，兼顧效率與品質管控。</div>
+        <div class="faq-q" data-en="Can I review emails before they're sent?" data-zh="信件內容我可以審核後才發出嗎？">Can I review emails before they're sent?</div>
+        <div class="faq-a" data-en="Yes. The system offers both &quot;fully automatic&quot; and &quot;manual review&quot; modes. You can have the system generate drafts for your team to review before sending — balancing efficiency with quality control." data-zh="可以。系統提供「全自動模式」和「人工審核模式」兩種選項，您可以設定讓系統先產生草稿，業務審核後再按發送，兼顧效率與品質管控。">Yes. The system offers both "fully automatic" and "manual review" modes. You can have the system generate drafts for your team to review before sending — balancing efficiency with quality control.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">多久可以看到結果？</div>
-        <div class="faq-a">通常第一批信件在設定完成後 24 小時內開始發送，多數客戶在第 2-3 週就開始收到回覆。系統會持續優化文案，通常第二個月效果明顯優於第一個月。</div>
+        <div class="faq-q" data-en="How quickly will I see results?" data-zh="多久可以看到結果？">How quickly will I see results?</div>
+        <div class="faq-a" data-en="Typically, the first batch of emails goes out within 24 hours of setup. Most clients start receiving replies by week 2-3. The system continuously optimizes copy, so month 2 typically outperforms month 1." data-zh="通常第一批信件在設定完成後 24 小時內開始發送，多數客戶在第 2-3 週就開始收到回覆。系統會持續優化文案，通常第二個月效果明顯優於第一個月。">Typically, the first batch of emails goes out within 24 hours of setup. Most clients start receiving replies by week 2-3. The system continuously optimizes copy, so month 2 typically outperforms month 1.</div>
       </div>
     </div>
   </div>
@@ -1261,34 +1307,109 @@
 <!-- CTA -->
 <section class="cta-section" id="cta">
   <div class="cta-glow"></div>
-  <div class="section-label">立即開始</div>
-  <h2>讓 AI 在今晚就幫你<br>開始找全球買主</h2>
-  <p>14 天免費試用，無需信用卡，不滿意隨時取消。填入 Email 開始，五分鐘後系統就上線。</p>
+  <div class="section-label" data-en="Get Started" data-zh="立即開始">Get Started</div>
+  <h2 data-en-html="Let AI Start Finding Your<br>Global Buyers Tonight" data-zh-html="讓 AI 在今晚就幫你<br>開始找全球買主">Let AI Start Finding Your<br>Global Buyers Tonight</h2>
+  <p data-en="14-day free trial. No credit card required. Cancel anytime. Enter your email to start — system goes live in 5 minutes." data-zh="14 天免費試用，無需信用卡，不滿意隨時取消。填入 Email 開始，五分鐘後系統就上線。">14-day free trial. No credit card required. Cancel anytime. Enter your email to start — system goes live in 5 minutes.</p>
 
   <div class="cta-form">
-    <input type="email" placeholder="輸入您的公司 Email">
-    <a href="#" class="btn-primary">立即免費開始 →</a>
+    <input type="email" id="ctaEmailInput" data-placeholder-en="Enter your work email" data-placeholder-zh="輸入您的公司 Email" placeholder="Enter your work email">
+    <a href="#" class="btn-primary" data-en="Start Free Now →" data-zh="立即免費開始 →">Start Free Now →</a>
   </div>
-  <p class="cta-note">🔒 14 天免費 · 無需信用卡 · 隨時取消 · 免費 Onboarding 輔導</p>
+  <p class="cta-note" data-en="🔒 14-day free · No credit card · Cancel anytime · Free onboarding included" data-zh="🔒 14 天免費 · 無需信用卡 · 隨時取消 · 免費 Onboarding 輔導">🔒 14-day free · No credit card · Cancel anytime · Free onboarding included</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="logo">Prospect<span>AI</span></div>
   <ul class="footer-links">
-    <li><a href="#">隱私政策</a></li>
-    <li><a href="#">服務條款</a></li>
-    <li><a href="#">聯絡我們</a></li>
-    <li><a href="#">部落格</a></li>
+    <li><a href="#" data-en="Privacy Policy" data-zh="隱私政策">Privacy Policy</a></li>
+    <li><a href="#" data-en="Terms of Service" data-zh="服務條款">Terms of Service</a></li>
+    <li><a href="#" data-en="Contact" data-zh="聯絡我們">Contact</a></li>
+    <li><a href="#" data-en="Blog" data-zh="部落格">Blog</a></li>
   </ul>
   <div class="footer-copy">© 2025 ProspectAI. All rights reserved.</div>
 </footer>
 
 <script>
+// ── LANGUAGE TOGGLE ──
+(function() {
+  var STORAGE_KEY = 'prospectai-lang';
+
+  // Determine initial language: localStorage > default to 'en'
+  var currentLang = localStorage.getItem(STORAGE_KEY) || 'en';
+
+  var btnEN = document.getElementById('btnEN');
+  var btnZH = document.getElementById('btnZH');
+
+  function applyLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem(STORAGE_KEY, lang);
+
+    // Update html lang attribute and data-lang
+    document.documentElement.lang = lang === 'en' ? 'en' : 'zh-TW';
+    document.documentElement.setAttribute('data-lang', lang);
+
+    // Update toggle button states
+    if (lang === 'en') {
+      btnEN.classList.add('active');
+      btnZH.classList.remove('active');
+    } else {
+      btnZH.classList.add('active');
+      btnEN.classList.remove('active');
+    }
+
+    // Update page title
+    var titleEl = document.querySelector('title');
+    if (titleEl) {
+      var titleText = titleEl.getAttribute('data-' + lang);
+      if (titleText) document.title = titleText;
+    }
+
+    // Update all elements with data-en / data-zh (text content only)
+    var textEls = document.querySelectorAll('[data-en][data-zh]');
+    for (var i = 0; i < textEls.length; i++) {
+      var el = textEls[i];
+      // Skip elements that have HTML variants — handled separately
+      if (el.hasAttribute('data-en-html') || el.hasAttribute('data-zh-html')) continue;
+      // Skip the title element
+      if (el.tagName === 'TITLE') continue;
+
+      var text = el.getAttribute('data-' + lang);
+      if (text !== null) {
+        el.textContent = text;
+      }
+    }
+
+    // Update elements with HTML content (data-en-html / data-zh-html)
+    var htmlEls = document.querySelectorAll('[data-en-html][data-zh-html]');
+    for (var j = 0; j < htmlEls.length; j++) {
+      var htmlEl = htmlEls[j];
+      var html = htmlEl.getAttribute('data-' + lang + '-html');
+      if (html !== null) {
+        htmlEl.innerHTML = html;
+      }
+    }
+
+    // Update placeholder for email input
+    var emailInput = document.getElementById('ctaEmailInput');
+    if (emailInput) {
+      var ph = emailInput.getAttribute('data-placeholder-' + lang);
+      if (ph) emailInput.placeholder = ph;
+    }
+  }
+
+  // Event listeners for toggle buttons
+  btnEN.addEventListener('click', function() { applyLanguage('en'); });
+  btnZH.addEventListener('click', function() { applyLanguage('zh'); });
+
+  // Apply language on load
+  applyLanguage(currentLang);
+})();
+
 // Smooth scroll for anchors
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var target = document.querySelector(a.getAttribute('href'));
     if (target) {
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1297,8 +1418,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // Intersection Observer for fade-in
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
     if (entry.isIntersecting) {
       entry.target.style.opacity = '1';
       entry.target.style.transform = 'translateY(0)';
@@ -1306,7 +1427,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.pain-card, .step, .feature-card, .testi-card, .faq-item, .plan').forEach(el => {
+document.querySelectorAll('.pain-card, .step, .feature-card, .testi-card, .faq-item, .plan').forEach(function(el) {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity .6s ease, transform .6s ease';
