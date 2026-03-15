@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProspectAI — 讓 AI 幫你找全球買主，自動寄出千封客製化開發信</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131c;
+    --surface2: #1c1c2e;
+    --border: rgba(255,255,255,0.07);
+    --accent: #e8ff6b;
+    --accent2: #6bffd4;
+    --text: #f0f0f5;
+    --muted: #7a7a9a;
+    --danger: #ff6b6b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: .5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--accent); }
+
+  nav ul {
+    list-style: none;
+    display: flex; gap: 2.5rem;
+  }
+
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color .2s;
+  }
+
+  nav ul a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #0a0a0f !important;
+    padding: .55rem 1.4rem;
+    border-radius: 6px;
+    font-weight: 700 !important;
+    font-size: 0.88rem !important;
+  }
+
+  .nav-cta:hover { opacity: .88; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,255,107,0.09) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: pulse 5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: .7; }
+    50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: rgba(232,255,107,0.1);
+    border: 1px solid rgba(232,255,107,0.25);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: .4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    position: relative; z-index: 1;
+    animation: fadeUp .6s ease both;
+  }
+
+  .badge::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    max-width: 14ch;
+    margin-bottom: 1.5rem;
+    position: relative; z-index: 1;
+    animation: fadeUp .7s .1s ease both;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+    position: relative;
+  }
+
+  h1 em::after {
+    content: '';
+    position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    opacity: .4;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 52ch;
+    margin-bottom: 3rem;
+    position: relative; z-index: 1;
+    animation: fadeUp .7s .2s ease both;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    position: relative; z-index: 1;
+    animation: fadeUp .7s .3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: .85rem 2.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 30px rgba(232,255,107,0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(232,255,107,0.35);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: .85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: border-color .2s, background .2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .hero-stats {
+    display: flex; gap: 3.5rem; justify-content: center;
+    margin-top: 4rem;
+    position: relative; z-index: 1;
+    animation: fadeUp .7s .4s ease both;
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── PAIN SECTION ── */
+  .pain {
+    padding: 7rem 2rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 55ch;
+    margin-bottom: 3.5rem;
+    font-weight: 300;
+  }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .pain-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s;
+  }
+
+  .pain-card:hover { border-color: rgba(255,107,107,0.35); }
+
+  .pain-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--danger);
+    opacity: .5;
+  }
+
+  .pain-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .pain-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: .6rem;
+  }
+
+  .pain-card p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    padding: 7rem 2rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0;
+    position: relative;
+    margin-top: 3.5rem;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 3rem; left: 3.5rem; right: 3.5rem; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: .25;
+    pointer-events: none;
+  }
+
+  .step {
+    padding: 2rem 2rem 2.5rem;
+    position: relative;
+    text-align: center;
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(232,255,107,0.1);
+    border: 1.5px solid rgba(232,255,107,0.3);
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.4rem;
+    position: relative; z-index: 1;
+  }
+
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: .6rem;
+  }
+
+  .step p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── FEATURES ── */
+  .features {
+    padding: 7rem 2rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .features-grid { grid-template-columns: 1fr; }
+  }
+
+  .feature-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem 2rem 2.5rem;
+    transition: border-color .3s, transform .3s;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(107,255,212,0.3);
+    transform: translateY(-4px);
+  }
+
+  .feature-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: rgba(107,255,212,0.1);
+    border: 1px solid rgba(107,255,212,0.2);
+    padding: .25rem .75rem;
+    border-radius: 4px;
+    margin-bottom: 1.2rem;
+  }
+
+  .feature-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: .7rem;
+  }
+
+  .feature-card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ── CASE STUDY ── */
+  .case {
+    padding: 7rem 2rem;
+    overflow: hidden;
+  }
+
+  .case-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .case-inner { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  .case-visual {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .case-visual::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .email-mockup {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .email-mockup::after {
+    content: 'PERSONALIZED';
+    position: absolute; top: -10px; right: 12px;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: .2rem .7rem;
+    border-radius: 4px;
+  }
+
+  .email-from {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: .5rem;
+  }
+
+  .email-subject {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: .75rem;
+  }
+
+  .email-body {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .email-body strong { color: var(--accent); font-weight: 600; }
+
+  .vs-divider {
+    text-align: center;
+    padding: .5rem 0;
+    color: var(--danger);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .case-content h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+  }
+
+  .case-content p {
+    color: var(--muted);
+    font-size: 0.97rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .result-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: .75rem;
+  }
+
+  .result-list li {
+    display: flex; align-items: flex-start; gap: .75rem;
+    font-size: 0.92rem;
+  }
+
+  .result-list li::before {
+    content: '→';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: .05em;
+  }
+
+  /* ── PRICING ── */
+  .pricing {
+    padding: 7rem 2rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 3.5rem auto 0;
+  }
+
+  @media (max-width: 768px) {
+    .plans { grid-template-columns: 1fr; max-width: 400px; }
+  }
+
+  .plan {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: left;
+    transition: border-color .3s;
+    position: relative;
+  }
+
+  .plan.featured {
+    border-color: rgba(232,255,107,0.4);
+    background: linear-gradient(160deg, rgba(232,255,107,0.04) 0%, var(--bg) 60%);
+  }
+
+  .plan.featured .plan-badge-top {
+    display: block;
+  }
+
+  .plan-badge-top {
+    display: none;
+    position: absolute;
+    top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--accent);
+    color: #0a0a0f;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: .25rem 1rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: .8rem;
+  }
+
+  .plan-price {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.8rem;
+    letter-spacing: -0.03em;
+    margin-bottom: .3rem;
+    line-height: 1;
+  }
+
+  .plan-price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+
+  .plan-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1.8rem;
+    line-height: 1.6;
+  }
+
+  .plan-features {
+    list-style: none;
+    display: flex; flex-direction: column; gap: .65rem;
+    margin-bottom: 2rem;
+  }
+
+  .plan-features li {
+    display: flex; align-items: center; gap: .6rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  .plan-features li::before {
+    content: '✓';
+    color: var(--accent2);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .plan-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: .8rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: .2s;
+  }
+
+  .plan-btn.primary {
+    background: var(--accent);
+    color: #0a0a0f;
+  }
+
+  .plan-btn.primary:hover { opacity: .88; }
+
+  .plan-btn.outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .plan-btn.outline:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    padding: 7rem 2rem;
+  }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .testi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+  }
+
+  .testi-stars {
+    color: var(--accent);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+  }
+
+  .testi-text {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .testi-author {
+    display: flex; align-items: center; gap: .75rem;
+  }
+
+  .testi-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #0a0a0f;
+    flex-shrink: 0;
+  }
+
+  .testi-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .testi-role {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* ── FAQ ── */
+  .faq {
+    padding: 7rem 2rem;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3.5rem;
+    max-width: 900px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  @media (max-width: 768px) {
+    .faq-grid { grid-template-columns: 1fr; }
+  }
+
+  .faq-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem;
+    cursor: pointer;
+    transition: border-color .3s;
+  }
+
+  .faq-item:hover { border-color: rgba(255,255,255,0.18); }
+
+  .faq-q {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: .75rem;
+  }
+
+  .faq-a {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 8rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    width: 600px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(232,255,107,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    max-width: 18ch;
+    margin: 0 auto 1.5rem;
+    position: relative; z-index: 1;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 48ch;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    position: relative; z-index: 1;
+  }
+
+  .cta-form {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+
+  .cta-form input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: .85rem 1.4rem;
+    border-radius: 8px;
+    outline: none;
+    width: 280px;
+    transition: border-color .2s;
+  }
+
+  .cta-form input:focus { border-color: rgba(232,255,107,0.4); }
+  .cta-form input::placeholder { color: var(--muted); }
+
+  .cta-note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    position: relative; z-index: 1;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex; gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero-stats { gap: 2rem; }
+    .steps::before { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Prospect<span>AI</span></div>
+  <ul>
+    <li><a href="#how">運作方式</a></li>
+    <li><a href="#features">功能特色</a></li>
+    <li><a href="#pricing">方案費用</a></li>
+    <li><a href="#faq">常見問答</a></li>
+    <li><a href="#cta" class="nav-cta">免費試用 14 天</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+
+  <div class="badge">全球市場開拓自動化系統</div>
+
+  <h1>讓 AI 幫你找到<br><em>全世界的買主</em><br>並自動寄信成交</h1>
+
+  <p class="hero-sub">
+    系統每天自動蒐集精準名單、驗證有效信箱、針對每家客戶客製化寫信、並自動送出。
+    您的業務只需要早上打開信箱，回覆那些「已經有興趣」的客戶。
+  </p>
+
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">免費試用 14 天 →</a>
+    <a href="#how" class="btn-secondary">看看怎麼運作的</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">18×</span>
+      <span class="stat-label">平均回覆率提升</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">95%</span>
+      <span class="stat-label">信箱有效率</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3 hrs</span>
+      <span class="stat-label">每週節省業務工時</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">40+</span>
+      <span class="stat-label">支援目標國家</span>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="container">
+    <div class="section-label">為什麼傳統方式已失效</div>
+    <h2 class="section-title">每個外銷業務都在重複同一個惡性循環</h2>
+    <p class="section-sub">這不是業務的問題，是方法過時了。舊的流程讓你的團隊浪費 80% 的時間在沒有意義的事上。</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="pain-icon">🗑️</span>
+        <h3>買來的名單，一半是廢的</h3>
+        <p>花了幾萬塊買商業資料庫，結果一半的信箱已失效，退信率超高，公司信箱還差點被列入黑名單。</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">📄</span>
+        <h3>群發罐頭信，沒人理你</h3>
+        <p>為了省時間把同一封公司簡介複製貼上給兩百家公司，對方一眼看出是群發，直接丟垃圾桶。</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">⏳</span>
+        <h3>業務人員在「找名單」不是在「談客戶」</h3>
+        <p>優秀的業務花了 60% 的時間在 Google 搜尋、手動整理 Excel，剩下才能真正跟客戶說話。</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">💸</span>
+        <h3>業務離職，客戶名單跟著走</h3>
+        <p>所有的開發記錄都在業務自己的信箱和腦子裡。一旦人走，公司就得從零開始，成本再翻一遍。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-label">四個自動化步驟</div>
+    <h2 class="section-title">從目標設定到客戶回覆<br>全自動、零人力介入</h2>
+    <p class="section-sub">您只需要告訴系統「我要賣什麼」和「我要找誰」，剩下的全部交給 AI。</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>策略設定</h3>
+        <p>輸入產品賣點（認證、專利、樣品）和目標市場（國家 + 產業），五分鐘完成設定。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>全網精準蒐集</h3>
+        <p>AI 自動在全球網路搜尋最新、最活躍的潛在買主，並自動排除無效和重複的聯絡人。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>千人千面客製文案</h3>
+        <p>每一封信都根據對方公司的業務模式重新撰寫，讓客戶覺得「你是專程來找我的」。</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>智慧排程自動發送</h3>
+        <p>模仿人類真實發信頻率，保護您的域名信譽。您可選全自動或審核後發送。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-label">核心功能</div>
+    <h2 class="section-title">每個細節都在保護<br>您的開發勝率</h2>
+    <p class="section-sub">從名單品質到信件投遞率，ProspectAI 在每個環節都設有防護機制。</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-tag">名單品質</span>
+        <h3>即時信箱驗證引擎</h3>
+        <p>發信前自動驗證每一個信箱是否有效，退信率控制在 2% 以下，讓您的域名永遠保持健康。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag">AI 文案</span>
+        <h3>多維度客製化引擎</h3>
+        <p>讀取對方網站、產品介紹、社群資訊，針對「鷹架公司」強調成本，針對「代理商」強調認證與利潤空間。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag">送達率</span>
+        <h3>主旨與句型隨機變化</h3>
+        <p>每封信件主旨和開場白都不同，完美規避垃圾郵件過濾器，確保信件落在主收件匣。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag">域名保護</span>
+        <h3>人性化發送節奏</h3>
+        <p>系統自動模擬真人發信頻率，分散在多個時段送出，每日上限智慧控管，確保帳號安全。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag">後續跟進</span>
+        <h3>自動 Follow-up 序列</h3>
+        <p>對於未回覆的潛在客戶，系統可自動在 3 天、7 天後發送友善提醒，轉化率再提升 40%。</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag">數據分析</span>
+        <h3>全流程雲端報表</h3>
+        <p>開信率、點擊率、回覆率一目了然。所有開發記錄永久保存於公司帳戶，業務異動不影響業績。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="case">
+  <div class="container">
+    <div class="case-inner">
+      <div class="case-visual">
+        <div class="email-mockup">
+          <div class="email-from">To: info@scaffoldcanada.ca · 鷹架租賃公司</div>
+          <div class="email-subject">Re: Cost reduction for your scaffolding fleet</div>
+          <div class="email-body">
+            Hi Mark,<br><br>
+            I noticed ABC Scaffold specializes in <strong>rental fleets for residential projects</strong>. Our reusable expansion bolt can be reinstalled <strong>2–3 times per unit</strong>, which typically cuts material costs by 35% on repeated installs.<br><br>
+            We're shipping free samples to Canada this April — happy to send a set your way. Can I get a shipping address?
+          </div>
+        </div>
+
+        <div class="vs-divider">VS. 傳統群發 ↓</div>
+
+        <div class="email-mockup" style="opacity:.45; pointer-events:none;">
+          <div class="email-from">To: 200 recipients · 全部一樣</div>
+          <div class="email-subject">Company Introduction – Taiwan Manufacturer</div>
+          <div class="email-body" style="text-decoration: line-through; opacity:.6;">
+            Dear Sir/Madam,<br><br>
+            We are a manufacturer from Taiwan. We produce high quality products. Please find attached our product catalog. We look forward to cooperating with you.
+          </div>
+        </div>
+      </div>
+
+      <div class="case-content">
+        <div class="section-label">實戰案例</div>
+        <h2>新型膨脹螺絲<br>打入加拿大市場</h2>
+        <p>一家台灣五金廠商，過去靠業務手動搜尋寄出 200 封群發信，收到 1 封回覆（「不需要」）。導入 ProspectAI 後，系統針對鷹架公司、建材代理商、建築包商分別撰寫客製化信件，同時提供免費樣品作為低門檻誘因。</p>
+
+        <ul class="result-list">
+          <li>三週內精準蒐集加拿大相關業者 340 家</li>
+          <li>自動分三類撰寫不同賣點的客製化信件</li>
+          <li>發出 310 封有效信（30 封信箱無效已自動剔除）</li>
+          <li>收到 27 封回覆，索取樣品率 8.7%（業界平均 0.5%）</li>
+          <li>最終成功開發 4 家新代理商，三個月內首張訂單到位</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-label">簡單透明定價</div>
+    <h2 class="section-title">選擇適合您規模的方案</h2>
+    <p class="section-sub">所有方案皆包含免費客製化 Onboarding。無隱藏費用，隨時可升降方案。</p>
+
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-badge-top">最受歡迎</div>
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$99 <span>/ 月</span></div>
+        <div class="plan-desc">適合剛開始進行海外開拓的中小企業</div>
+        <ul class="plan-features">
+          <li>每月 500 封有效信件</li>
+          <li>2 個開發專案</li>
+          <li>AI 客製化信件撰寫</li>
+          <li>信箱有效性驗證</li>
+          <li>基本雲端報表</li>
+        </ul>
+        <a href="#cta" class="plan-btn outline">開始免費試用</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge-top">最熱門</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-price">$249 <span>/ 月</span></div>
+        <div class="plan-desc">適合積極擴展多個海外市場的成長型企業</div>
+        <ul class="plan-features">
+          <li>每月 2,000 封有效信件</li>
+          <li>10 個開發專案</li>
+          <li>多維度 AI 客製化文案</li>
+          <li>自動 Follow-up 序列</li>
+          <li>域名信譽保護機制</li>
+          <li>完整數據分析報表</li>
+          <li>WhatsApp 整合跟進</li>
+        </ul>
+        <a href="#cta" class="plan-btn primary">開始免費試用 →</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-badge-top">最受歡迎</div>
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">客製<span> 報價</span></div>
+        <div class="plan-desc">適合大型業務團隊或多品牌集團</div>
+        <ul class="plan-features">
+          <li>無限信件發送量</li>
+          <li>無限開發專案</li>
+          <li>專屬客戶成功經理</li>
+          <li>自訂 AI 文案風格與品牌聲音</li>
+          <li>CRM 系統整合（Salesforce / HubSpot）</li>
+          <li>SLA 服務等級保障</li>
+        </ul>
+        <a href="#cta" class="plan-btn outline">聯繫業務洽談</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-label">客戶心聲</div>
+    <h2 class="section-title">他們的業務，<br>已經不一樣了</h2>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">「導入後的第一個月，我們就在澳洲市場找到了 3 家有意願的代理商。以前靠業務手動找，可能要花三個月還不一定有結果。」</p>
+        <div class="testi-author">
+          <div class="testi-avatar">陳</div>
+          <div>
+            <div class="testi-name">陳志豪</div>
+            <div class="testi-role">業務總監 · 台灣塑料製品出口商</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">「最讓我驚訝的是客製化的程度。客戶以為是我們業務專程寫給他們的，完全不像群發信。回覆率從 0.3% 跳到快 6%。」</p>
+        <div class="testi-author">
+          <div class="testi-avatar">林</div>
+          <div>
+            <div class="testi-name">林美玲</div>
+            <div class="testi-role">行銷經理 · 工業設備製造商</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">「展覽前三週用 ProspectAI 邀約，到場的潛在客戶比去年多了一倍，而且都是我們真正想談的客群，不是來拿贈品的。」</p>
+        <div class="testi-author">
+          <div class="testi-avatar">王</div>
+          <div>
+            <div class="testi-name">王建明</div>
+            <div class="testi-role">創辦人 · 醫療器材新創公司</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-label" style="text-align:center">常見問答</div>
+    <h2 class="section-title" style="text-align:center; margin-bottom: .5rem">您可能想知道的事</h2>
+    <p class="section-sub" style="text-align:center; margin: 0 auto 0"></p>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">系統找到的名單是合法的嗎？</div>
+        <div class="faq-a">是的。系統僅搜集公開於網路上的企業聯絡資訊（如官方網站、商業目錄、LinkedIn 公開頁面），完全符合 GDPR 與各國商業電子郵件法規的 B2B 通訊規範。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">會不會讓我的公司信箱被列入垃圾信？</div>
+        <div class="faq-a">不會。系統內建域名暖身（Email Warming）、發送頻率控管、信箱有效驗證三重保護，確保退信率低於 2%，主動維護您的域名信譽。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">我們的產業比較冷門，AI 也能客製化嗎？</div>
+        <div class="faq-a">可以。只要告訴系統您的產品特性和目標客群特徵，AI 就能學習行業術語和買家痛點，不管是工業零件、農業機械還是軟體服務都適用。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">需要懂技術或 AI 嗎？</div>
+        <div class="faq-a">完全不需要。介面設計以業務人員為核心，操作就像填表格一樣直覺。我們也提供免費的一對一 Onboarding 協助您在第一天就開始運作。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">信件內容我可以審核後才發出嗎？</div>
+        <div class="faq-a">可以。系統提供「全自動模式」和「人工審核模式」兩種選項，您可以設定讓系統先產生草稿，業務審核後再按發送，兼顧效率與品質管控。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">多久可以看到結果？</div>
+        <div class="faq-a">通常第一批信件在設定完成後 24 小時內開始發送，多數客戶在第 2-3 週就開始收到回覆。系統會持續優化文案，通常第二個月效果明顯優於第一個月。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-glow"></div>
+  <div class="section-label">立即開始</div>
+  <h2>讓 AI 在今晚就幫你<br>開始找全球買主</h2>
+  <p>14 天免費試用，無需信用卡，不滿意隨時取消。填入 Email 開始，五分鐘後系統就上線。</p>
+
+  <div class="cta-form">
+    <input type="email" placeholder="輸入您的公司 Email">
+    <a href="#" class="btn-primary">立即免費開始 →</a>
+  </div>
+  <p class="cta-note">🔒 14 天免費 · 無需信用卡 · 隨時取消 · 免費 Onboarding 輔導</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Prospect<span>AI</span></div>
+  <ul class="footer-links">
+    <li><a href="#">隱私政策</a></li>
+    <li><a href="#">服務條款</a></li>
+    <li><a href="#">聯絡我們</a></li>
+    <li><a href="#">部落格</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 ProspectAI. All rights reserved.</div>
+</footer>
+
+<script>
+// Smooth scroll for anchors
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Intersection Observer for fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.pain-card, .step, .feature-card, .testi-card, .faq-item, .plan').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .6s ease, transform .6s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
